@@ -20,6 +20,8 @@ public class TestModel {
 //		for (Country country : stats.keySet())
 //			System.out.format("%s %d\n", country, stats.get(country));		
 		
+		model.calcolaConfine(2000);
+		System.out.println("Grafo creato con "+model.vertexNumber()+" vertex  e "+model.edgeNumber()+" archi \n");
 	}
 
 }

@@ -29,6 +29,31 @@ public class FXMLController {
     @FXML
     void doCalcolaConfini(ActionEvent event) {
 
+    	txtResult.clear(); 
+    	//controllo sull'input 
+    	int anno; 
+    	if(txtAnno.getText().length()==0) {
+    		txtResult.appendText("ERRORE : Inserire anno \n");
+    		return; 
+    	}
+    	try {
+    		anno= Integer.parseInt(txtAnno.getText()); 
+    	}catch(Exception e) {
+    		txtResult.appendText("ERRORE : Inserire anno (NUMERO) \n");
+    		return;
+    	}
+    	 
+    	if (anno <1816 || anno >2006 ) {
+    		txtResult.appendText("ERRORE : Anno non valido! Considerare l'intervallo 1816-2006 \n");
+    		return; 
+    	}
+    	
+    	//tutto ok coi controlli 
+    	this.model.calcolaConfine(anno); 
+    	txtResult.appendText("Grafo creato con "+model.vertexNumber()+" vertex and "+model.edgeNumber()+" edges \n");
+    	txtResult.appendText("ELENCO : \n");
+    	txtResult.appendText(this.model.elencoCountries());
+    	txtResult.appendText("Numero di componenti connesse nel grafo : "+this.model.componentiConnesse());
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
