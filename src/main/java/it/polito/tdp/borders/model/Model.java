@@ -1,6 +1,9 @@
 package it.polito.tdp.borders.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jgrapht.Graph;
@@ -8,6 +11,9 @@ import org.jgrapht.Graphs;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
+import org.jgrapht.traverse.DepthFirstIterator;
+import org.jgrapht.traverse.GraphIterator;
 
 import it.polito.tdp.borders.db.BordersDAO;
 
@@ -83,5 +89,36 @@ public class Model {
 	public int componentiConnesse() {
 		ConnectivityInspector<Country, DefaultEdge> insp= new ConnectivityInspector<>(this.graph);
 		return insp.connectedSets().size(); 
+	}
+
+	public Collection<Country> getCountriesGraph() {
+		
+		return this.graph.vertexSet();
+	}
+
+	public List<Country> trovaViciniAmpiezza(Country stato) {
+		
+		List<Country> vicini= new ArrayList<>(); 
+		
+		GraphIterator<Country, DefaultEdge> bfv= new BreadthFirstIterator<Country, DefaultEdge>(graph, stato); 
+		while(bfv.hasNext()) {
+			vicini.add(bfv.next()); //aggiungo il prox finche' esiste un successivo
+			
+		}
+		
+		return vicini;
+	}
+	
+    public List<Country> trovaViciniProfondita(Country stato) {
+		
+		List<Country> vicini= new ArrayList<>(); 
+		
+		GraphIterator<Country, DefaultEdge> bfv= new DepthFirstIterator<Country, DefaultEdge>(graph, stato); 
+		while(bfv.hasNext()) {
+			vicini.add(bfv.next()); //aggiungo il prox finche' esiste un successivo
+			
+		}
+		
+		return vicini;
 	}
 }
